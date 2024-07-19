@@ -4,18 +4,18 @@ let todo = JSON.parse(localStorage.getItem("todo")) || [];
 const todoInput = document.getElementById("todoInput");
 const todoList = document.getElementById("todoList");
 const todoCount = document.getElementById("todoCount");
-const addTasks = document.querySelector(".btn");
-const deleteTask = document.getElementById("deleteButton");
+const addButton = document.querySelector(".btn");
+const deleteButton = document.getElementById("deleteButton");
 
 document.addEventListener("DOMContentLoaded", function () {
-    addTasks.addEventListener("click", addTask);
+    addButton.addEventListener("click", addTask);
     todoInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
             event.preventDefault();
             addTask();
         }
     });
-    deleteTask.addEventListener("click", deleteTasks);
+    deleteButton.addEventListener("click", deleteTasks);
     displayTasks();
 });
 
@@ -32,8 +32,29 @@ function addTask() {
     }
 }
 
+function editTask(index) {
+    const todoItem = document.getElementById(`todo-${index}`);
+    const existingText = todo[index].text;
+    const inputElement = document.createElement("input");
+
+    inputElement.value = existingText;
+    todoItem.replaceWith(inputElement);
+    inputElement.focus();
+
+    inputElement.addEventListener("blur", function () {
+        const updatedText = inputElement.value.trim();
+        if (updatedText) {
+            todo[index].text = updatedText;
+            saveToLocalStorage();
+        }
+        displayTasks();
+    });
+}
+
 function deleteTasks() {
-    console.log("test");
+    todo = [];
+    saveToLocalStorage();
+    displayTasks();
 }
 
 function displayTasks() {
@@ -51,6 +72,13 @@ function displayTasks() {
     });
         todoList.appendChild(p);
     });
+    todoCount.textContent = todo.length;
+}
+
+function toggleTask(index) {
+    todo[index].disabled = !todo[index].disabled;
+    saveToLocalStorage();
+    displayTasks();
 }
 
 function saveToLocalStorage() {

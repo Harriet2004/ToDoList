@@ -1,15 +1,15 @@
 //Retrieve todo from local storage or initialize an empty array
 
 let todo = JSON.parse(localStorage.getItem("todo")) || [];
-const todoInput = document.getElementById("input");
-const todoList = document.getElementById("list");
-const todoCount = document.getElementById("count");
+const todoInput = document.getElementById("todoInput");
+const todoList = document.getElementById("todoList");
+const todoCount = document.getElementById("todoCount");
 const addTasks = document.querySelector(".btn");
-const deleteTask = document.getElementById("delete");
+const deleteTask = document.getElementById("deleteButton");
 
 document.addEventListener("DOMContentLoaded", function () {
     addTasks.addEventListener("click", addTask);
-    todoInput.addEventListener("keydown", function(event) {
+    todoInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
             event.preventDefault();
             addTask();
@@ -21,23 +21,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function addTask() {
     const task = todoInput.value.trim()
-    if (task !== "") {
+    if (task !== " ") {
         todo.push({
             text: task, 
             disabled: false
         });
         saveToLocalStorage();
-        todoInput.value = "";
+        todoInput.value = " ";
         displayTasks();
     }
 }
 
 function deleteTasks() {
-
+    console.log("test");
 }
 
 function displayTasks() {
-
+    todoList.innerHTML = " ";
+    todo.forEach((item, index) => {
+        const p = document.createElement("p");
+        p.innerHTML = `
+            <div class = "todo-container">
+                <input type = "checkbox" class = "todo-checkbox" id = "input-${index}" ${item.disabled ? "checked" : "" } >
+                <p id = "todo-${index}" class = "${item.disabled ? "disabled" : "" }" onclick = "editTask(${index})" > ${item.text} </p>
+            </div>
+        `;
+        p.querySelector(".todo-checkbox").addEventListener("change", () => {
+            toggleTask(index);
+    });
+        todoList.appendChild(p);
+    });
 }
 
 function saveToLocalStorage() {

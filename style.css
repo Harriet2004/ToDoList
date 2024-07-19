@@ -16,7 +16,7 @@ body {
     align-items: center;
 }
 
-.button {
+.btn {
     color: white;
     font-size: large;
     padding: 0.5rem 1.5rem;
@@ -32,7 +32,7 @@ h1, h2, h3, h4, h5, h6, p {
     margin: 0;
 }
 
-.main-todo{ 
+.todo{ 
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -89,12 +89,25 @@ li {
 }
 
 #todoList p {
+    display: flex;
+    gap: 1rem;
+    color: black;
+    align-items: center;
+}
+#todoList .disabled {
     color: black;
 }
 
 .disabled {
     display: flex;
     text-decoration: line-through;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
 }
 
 input[type="checkbox"]::before {
@@ -109,7 +122,7 @@ input[type="checkbox"]::before {
     color: transparent;
 }
 
-input[type="checkbox"]::before::after {
+input[type="checkbox"]:checked::before {
     color: white;
     background-color: green;
     border: 0.05rem solid green;

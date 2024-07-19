@@ -4,11 +4,11 @@ let todo = JSON.parse(localStorage.getItem("todo")) || [];
 const todoInput = document.getElementById("input");
 const todoList = document.getElementById("list");
 const todoCount = document.getElementById("count");
-const addTask = document.querySelector(".btn");
+const addTasks = document.querySelector(".btn");
 const deleteTask = document.getElementById("delete");
 
 document.addEventListener("DOMContentLoaded", function() {
-    addTask.addEventListener("click", addTask());
+    addTasks.addEventListener("click", addTask());
     todoInput.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
@@ -19,14 +19,3 @@ document.addEventListener("DOMContentLoaded", function() {
     displayTasks();
 });
 
-function addTask() {
-
-}
-
-function deleteTasks() {
-
-}
-
-function displayTasks() {
-
-}
